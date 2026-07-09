@@ -21,6 +21,10 @@ public launch material until Oliver explicitly approves publication.
 - [BMRCL QR ticket generation process](./docs/provider-policies/BMRCL-QR-ticket-generation-process.pdf)
 - [MMMOCL QR ticket generation process](./docs/provider-policies/MMMOCL-QR-ticket-generation-process.pdf)
 
+## License
+
+Apache-2.0. See [LICENSE](./LICENSE) and [NOTICE](./NOTICE).
+
 ## Install
 
 ```sh

@@ -13,6 +13,16 @@ The first publish target is `ondc-metro-qr-generator@0.0.1`.
 The GitHub repository must be created private under `oliver-chat` first. Do not
 make the repository public until the team explicitly approves that launch step.
 
+## License And Attribution
+
+Use Apache-2.0 for the package. Keep the standard Apache license text in
+`LICENSE` and keep Oliver attribution in `NOTICE`, package metadata, and launch
+materials.
+
+Commercial use is permitted under Apache-2.0. The attribution requirement comes
+from preserving the license and NOTICE text, not from a commercial permission
+gate.
+
 ## Why This Package Exists
 
 BPPs, AFC teams, ONDC, and buyer apps need a shared, reproducible implementation

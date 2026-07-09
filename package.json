@@ -2,7 +2,8 @@
   "name": "ondc-metro-qr-generator",
   "version": "0.0.1",
   "description": "Typed ONDC metro QR payload and PNG generation for supported BPP policies.",
-  "license": "MIT",
+  "license": "Apache-2.0",
+  "author": "Oliver Chat",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/oliver-chat/ondc-metro-qr-generator.git"
@@ -14,7 +15,8 @@
     "dist",
     "docs/provider-policies",
     "README.md",
-    "LICENSE"
+    "LICENSE",
+    "NOTICE"
   ],
   "exports": {
     ".": {
