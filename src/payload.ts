@@ -14,6 +14,8 @@ export interface BuildMetroQrPayloadParameters {
 
 export type BuildMetroQrPayloadReturnType = MetroQrPayload
 
+export type QrErrorCorrectionLevel = 'L' | 'M' | 'Q' | 'H'
+
 export type MetroQrPayload = MetroQrBytePayload | MetroQrTextPayload
 
 export interface MetroQrBytePayload {

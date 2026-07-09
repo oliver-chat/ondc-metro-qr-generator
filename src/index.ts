@@ -14,6 +14,7 @@ export {
   type MetroQrBytePayload,
   type MetroQrPayload,
   type MetroQrTextPayload,
+  type QrErrorCorrectionLevel,
 } from './payload.js'
 export {
   type AssertMetroQrPolicyParameters,
@@ -29,3 +30,8 @@ export {
   type MetroQrPolicyOperator,
   metroQrPolicies,
 } from './policies.js'
+export {
+  type RenderMetroQrPngParameters,
+  type RenderMetroQrPngReturnType,
+  renderMetroQrPng,
+} from './render.js'
