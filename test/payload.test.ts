@@ -8,7 +8,7 @@ import {
 } from '../src/index.js'
 
 describe('metro QR payload generation', () => {
-  test('builds static opaque payloads without modifying token text', () => {
+  test('builds static payloads without modifying token text', () => {
     expect(
       buildMetroQrPayload({
         bppId: BppID.DMRC,
@@ -18,7 +18,7 @@ describe('metro QR payload generation', () => {
       kind: 'text',
       policy: {
         bppId: BppID.DMRC,
-        kind: 'static-opaque',
+        kind: 'static',
       },
       text: 'synthetic-static-token',
     })

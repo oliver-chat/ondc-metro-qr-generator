@@ -35,10 +35,10 @@ Current live BPP policy shape:
 | BPP | QR policy | Notes |
 | --- | --- | --- |
 | `ondc-prod-bmrcl.sequelstring.com/seller/bmrcl` | dynamic timestamp | Appends BMRCL dynamic block to provider token. |
-| `ondc-prod-dmrc.sequelstring.com/seller/dmrc` | static opaque | Encodes provider token unchanged. |
+| `ondc-prod-dmrc.sequelstring.com/seller/dmrc` | static | Encodes provider token unchanged. |
 | `ondc-prod-mmmocl.sequelstring.com/seller/mmmocl` | base64 byte mode | Decodes base64 token into raw byte-mode QR data. |
-| `ondc-prod-mmmopl.sequelstring.com/seller/mmmopl` | static opaque | Encodes provider token unchanged. |
-| `ondc-prod-mmmrcl.sequelstring.com/seller/mmmrcl` | static opaque | Encodes provider token unchanged. |
+| `ondc-prod-mmmopl.sequelstring.com/seller/mmmopl` | static | Encodes provider token unchanged. |
+| `ondc-prod-mmmrcl.sequelstring.com/seller/mmmrcl` | static | Encodes provider token unchanged. |
 
 Use synthetic provider-shaped fixtures in this package. Do not commit raw
 production QR tokens or production identifiers.
@@ -131,7 +131,7 @@ Policy shape:
 
 ```ts
 type MetroQrPolicy =
-  | { kind: 'static-opaque'; bppId: KnownBppId }
+  | { kind: 'static'; bppId: KnownBppId }
   | { kind: 'base64-byte'; bppId: KnownBppId }
   | { kind: 'dynamic-timestamp'; bppId: KnownBppId; refreshSeconds: 30 }
 ```
@@ -174,7 +174,7 @@ Atomic task / commit 1: `feat: define metro qr provider policies`
 
 Atomic task / commit 2: `feat: build qr payloads for live bpps`
 
-- Implement static opaque, base64 byte-mode, and BMRCL dynamic timestamp
+- Implement static, base64 byte-mode, and BMRCL dynamic timestamp
   payload generation.
 - Verification: `bun test test/payload.test.ts`
 

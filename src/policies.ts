@@ -24,7 +24,7 @@ export const metroQrPolicies = [
   {
     bppId: BppID.DMRC,
     cityCode: 'std:011',
-    kind: 'static-opaque',
+    kind: 'static',
   },
   {
     bppId: BppID.MMMOCL,
@@ -34,12 +34,12 @@ export const metroQrPolicies = [
   {
     bppId: BppID.MMOPL,
     cityCode: 'std:022',
-    kind: 'static-opaque',
+    kind: 'static',
   },
   {
     bppId: BppID.MMRCL,
     cityCode: 'std:022',
-    kind: 'static-opaque',
+    kind: 'static',
   },
 ] as const
 

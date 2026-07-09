@@ -61,7 +61,7 @@ export function buildMetroQrPayload({
         policy,
         text: `${token}#${buildBmrclDynamicBlock({ nowMs })}`,
       }
-    case 'static-opaque':
+    case 'static':
       return {
         kind: 'text',
         policy,

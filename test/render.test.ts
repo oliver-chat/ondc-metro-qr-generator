@@ -2,7 +2,7 @@ import { describe, expect, test } from 'bun:test'
 import { BppID, renderMetroQrPng } from '../src/index.js'
 
 describe('metro QR PNG rendering', () => {
-  test('renders static opaque payloads as PNG bytes', async () => {
+  test('renders static payloads as PNG bytes', async () => {
     const { payload, png } = await renderMetroQrPng({
       bppId: BppID.DMRC,
       token: 'synthetic-static-token',
@@ -10,7 +10,7 @@ describe('metro QR PNG rendering', () => {
 
     expect(payload).toMatchObject({
       kind: 'text',
-      policy: { bppId: BppID.DMRC, kind: 'static-opaque' },
+      policy: { bppId: BppID.DMRC, kind: 'static' },
       text: 'synthetic-static-token',
     })
     expect([...png.slice(0, 8)]).toEqual([137, 80, 78, 71, 13, 10, 26, 10])

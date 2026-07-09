@@ -27,10 +27,10 @@ describe('metro QR policies', () => {
       metroQrPolicies.map((policy) => [policy.bppId, policy.kind]),
     ).toEqual([
       [BppID.BMRCL, 'dynamic-timestamp'],
-      [BppID.DMRC, 'static-opaque'],
+      [BppID.DMRC, 'static'],
       [BppID.MMMOCL, 'base64-byte'],
-      [BppID.MMOPL, 'static-opaque'],
-      [BppID.MMRCL, 'static-opaque'],
+      [BppID.MMOPL, 'static'],
+      [BppID.MMRCL, 'static'],
     ])
   })
 

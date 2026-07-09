@@ -11,10 +11,10 @@ public launch material until Oliver explicitly approves publication.
 | BPP | Policy |
 | --- | --- |
 | BMRCL | Dynamic timestamp QR |
-| DMRC | Static opaque QR |
+| DMRC | Static QR |
 | MMMOCL | Base64 decoded byte-mode QR |
-| MMOPL | Static opaque QR |
-| MMRCL | Static opaque QR |
+| MMOPL | Static QR |
+| MMRCL | Static QR |
 
 ## Install
 
