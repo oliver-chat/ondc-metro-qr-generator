@@ -40,6 +40,10 @@ const { png } = await MetroQR.renderPng({
 })
 ```
 
+Supported BPP ids are the `BppID` constants defined in
+[`src/policies.ts`](./src/policies.ts#L6-L12). Those are the only BPPs this
+package supports.
+
 ## Public Methods
 
 ### High-Level Provider API
