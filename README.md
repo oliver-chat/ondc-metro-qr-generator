@@ -30,7 +30,14 @@ import { MetroQR } from 'ondc-metro-qr-generator'
 const payload = MetroQR.dmrc({
   token: 'synthetic-provider-token',
 })
-const { png } = await MetroQR.renderPng({ payload })
+const { png } = await MetroQR.renderPng({
+  payload,
+  qrOptions: {
+    errorCorrectionLevel: 'M',
+    margin: 1,
+    width: 512,
+  },
+})
 ```
 
 ## Public Methods
@@ -64,7 +71,12 @@ import { MetroQR } from 'ondc-metro-qr-generator'
 const payload = MetroQR.dmrc({
   token: 'synthetic-provider-token',
 })
-const { png } = await MetroQR.renderPng({ payload })
+const { png } = await MetroQR.renderPng({
+  payload,
+  qrOptions: {
+    width: 512,
+  },
+})
 ```
 
 ### Low-Level API

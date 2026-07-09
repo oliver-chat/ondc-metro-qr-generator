@@ -4,8 +4,8 @@ import {
 } from './payload.js'
 import { BppID } from './policies.js'
 import {
-  type RenderMetroQrPayloadPngParameters,
   type RenderMetroQrPayloadPngReturnType,
+  type RenderQrOptions,
   renderMetroQrPayloadPng,
 } from './render.js'
 
@@ -19,6 +19,14 @@ export interface BuildBmrclMetroQrParameters
 }
 
 export type BuildMetroQrProviderReturnType = BuildMetroQrPayloadReturnType
+
+export interface MetroQRRenderPngParameters {
+  readonly payload: BuildMetroQrProviderReturnType
+  readonly qrOptions?: RenderQrOptions
+}
+
+export type MetroQRRenderPngReturnType =
+  Promise<RenderMetroQrPayloadPngReturnType>
 
 export interface MetroQRApi {
   readonly bmrcl: (
@@ -37,8 +45,8 @@ export interface MetroQRApi {
     parameters: BuildMetroQrProviderParameters,
   ) => BuildMetroQrProviderReturnType
   readonly renderPng: (
-    parameters: RenderMetroQrPayloadPngParameters,
-  ) => Promise<RenderMetroQrPayloadPngReturnType>
+    parameters: MetroQRRenderPngParameters,
+  ) => MetroQRRenderPngReturnType
 }
 
 /**
@@ -50,7 +58,10 @@ export interface MetroQRApi {
  * const payload = MetroQR.bmrcl({
  *   token: 'synthetic-provider-token',
  * })
- * const { png } = await MetroQR.renderPng({ payload })
+ * const { png } = await MetroQR.renderPng({
+ *   payload,
+ *   qrOptions: { width: 512 },
+ * })
  */
 export const MetroQR = {
   bmrcl(parameters) {
@@ -83,5 +94,10 @@ export const MetroQR = {
       bppId: BppID.MMRCL,
     })
   },
-  renderPng: renderMetroQrPayloadPng,
+  renderPng({ payload, qrOptions }) {
+    return renderMetroQrPayloadPng({
+      payload,
+      ...(qrOptions ?? {}),
+    })
+  },
 } satisfies MetroQRApi

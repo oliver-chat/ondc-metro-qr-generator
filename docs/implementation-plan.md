@@ -114,7 +114,7 @@ MetroQR.dmrc(parameters): BuildMetroQrProviderReturnType
 MetroQR.mmmocl(parameters): BuildMetroQrProviderReturnType
 MetroQR.mmopl(parameters): BuildMetroQrProviderReturnType
 MetroQR.mmrcl(parameters): BuildMetroQrProviderReturnType
-MetroQR.renderPng(parameters): Promise<RenderMetroQrPayloadPngReturnType>
+MetroQR.renderPng({ payload, qrOptions? }): Promise<RenderMetroQrPayloadPngReturnType>
 buildMetroQrPayload(parameters): BuildMetroQrPayloadReturnType
 renderMetroQrPayloadPng(parameters): Promise<RenderMetroQrPayloadPngReturnType>
 renderMetroQrPng(parameters): Promise<RenderMetroQrPngReturnType>

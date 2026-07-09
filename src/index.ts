@@ -9,6 +9,8 @@ export {
   type BuildMetroQrProviderReturnType,
   MetroQR,
   type MetroQRApi,
+  type MetroQRRenderPngParameters,
+  type MetroQRRenderPngReturnType,
 } from './metro-qr.js'
 export {
   type BuildBmrclDynamicBlockParameters,

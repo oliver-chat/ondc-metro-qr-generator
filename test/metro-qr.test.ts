@@ -51,4 +51,22 @@ describe('MetroQR provider API', () => {
     expect([...png.slice(0, 8)]).toEqual([137, 80, 78, 71, 13, 10, 26, 10])
     expect(png.byteLength).toBeGreaterThan(100)
   })
+
+  test('renders with nested QR options', async () => {
+    const payload = MetroQR.dmrc({ token: 'synthetic-dmrc-token' })
+    const { png } = await MetroQR.renderPng({
+      payload,
+      qrOptions: {
+        errorCorrectionLevel: 'Q',
+        margin: 2,
+        width: 256,
+      },
+    })
+
+    expect(pngWidth(png)).toBe(256)
+  })
 })
+
+function pngWidth(png: Uint8Array): number {
+  return new DataView(png.buffer, png.byteOffset, png.byteLength).getUint32(16)
+}
