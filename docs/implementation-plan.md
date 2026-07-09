@@ -131,9 +131,9 @@ Policy shape:
 
 ```ts
 type MetroQrPolicy =
-  | { kind: 'static-opaque'; bppId: KnownBppId; operator: 'DMRC' | 'MMOPL' | 'MMRCL' }
-  | { kind: 'base64-byte'; bppId: KnownBppId; operator: 'MMMOCL' }
-  | { kind: 'dynamic-timestamp'; bppId: KnownBppId; operator: 'BMRCL'; refreshSeconds: 30 }
+  | { kind: 'static-opaque'; bppId: KnownBppId }
+  | { kind: 'base64-byte'; bppId: KnownBppId }
+  | { kind: 'dynamic-timestamp'; bppId: KnownBppId; refreshSeconds: 30 }
 ```
 
 Payload shape:

@@ -19,7 +19,6 @@ describe('metro QR payload generation', () => {
       policy: {
         bppId: BppID.DMRC,
         kind: 'static-opaque',
-        operator: 'DMRC',
       },
       text: 'synthetic-static-token',
     })
@@ -38,7 +37,7 @@ describe('metro QR payload generation', () => {
 
     expect(payload.kind).toBe('bytes')
     if (payload.kind !== 'bytes') throw new Error('expected bytes payload')
-    expect(payload.policy.operator).toBe('MMMOCL')
+    expect(payload.policy.bppId).toBe(BppID.MMMOCL)
     expect([...payload.bytes]).toEqual([...sourceBytes])
   })
 
@@ -55,8 +54,8 @@ describe('metro QR payload generation', () => {
     ).toMatchObject({
       kind: 'text',
       policy: {
+        bppId: BppID.BMRCL,
         kind: 'dynamic-timestamp',
-        operator: 'BMRCL',
         refreshSeconds: 30,
       },
       text: 'synthetic-bmrcl-static-token-block#{66323ad2||0.0|0.0|}',

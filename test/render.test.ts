@@ -10,7 +10,7 @@ describe('metro QR PNG rendering', () => {
 
     expect(payload).toMatchObject({
       kind: 'text',
-      policy: { kind: 'static-opaque', operator: 'DMRC' },
+      policy: { bppId: BppID.DMRC, kind: 'static-opaque' },
       text: 'synthetic-static-token',
     })
     expect([...png.slice(0, 8)]).toEqual([137, 80, 78, 71, 13, 10, 26, 10])

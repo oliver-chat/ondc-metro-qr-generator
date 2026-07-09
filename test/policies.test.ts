@@ -5,7 +5,6 @@ import {
   isKnownMetroQrBpp,
   type KnownBppId,
   type MetroQrPolicyKind,
-  type MetroQrPolicyOperator,
   metroQrPolicies,
 } from '../src/index.js'
 
@@ -23,15 +22,15 @@ describe('metro QR policies', () => {
     )
   })
 
-  test('assigns the expected methodology to each operator', () => {
+  test('assigns the expected methodology to each BPP', () => {
     expect(
-      metroQrPolicies.map((policy) => [policy.operator, policy.kind]),
+      metroQrPolicies.map((policy) => [policy.bppId, policy.kind]),
     ).toEqual([
-      ['BMRCL', 'dynamic-timestamp'],
-      ['DMRC', 'static-opaque'],
-      ['MMMOCL', 'base64-byte'],
-      ['MMOPL', 'static-opaque'],
-      ['MMRCL', 'static-opaque'],
+      [BppID.BMRCL, 'dynamic-timestamp'],
+      [BppID.DMRC, 'static-opaque'],
+      [BppID.MMMOCL, 'base64-byte'],
+      [BppID.MMOPL, 'static-opaque'],
+      [BppID.MMRCL, 'static-opaque'],
     ])
   })
 
@@ -44,7 +43,6 @@ describe('metro QR policies', () => {
       bppId: 'ondc-prod-bmrcl.sequelstring.com/seller/bmrcl',
       cityCode: 'std:080',
       kind: 'dynamic-timestamp',
-      operator: 'BMRCL',
       refreshSeconds: 30,
     })
   })
@@ -61,12 +59,10 @@ describe('metro QR policies', () => {
   test('derives literal public types from the canonical table', () => {
     const knownBppId: KnownBppId = BppID.MMMOCL
     const kind: MetroQrPolicyKind = 'base64-byte'
-    const operator: MetroQrPolicyOperator = 'MMMOCL'
 
-    expect({ knownBppId, kind, operator }).toEqual({
+    expect({ knownBppId, kind }).toEqual({
       knownBppId: BppID.MMMOCL,
       kind: 'base64-byte',
-      operator: 'MMMOCL',
     })
   })
 })

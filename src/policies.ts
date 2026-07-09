@@ -19,32 +19,27 @@ export const metroQrPolicies = [
     bppId: BppID.BMRCL,
     cityCode: 'std:080',
     kind: 'dynamic-timestamp',
-    operator: 'BMRCL',
     refreshSeconds: 30,
   },
   {
     bppId: BppID.DMRC,
     cityCode: 'std:011',
     kind: 'static-opaque',
-    operator: 'DMRC',
   },
   {
     bppId: BppID.MMMOCL,
     cityCode: 'std:022',
     kind: 'base64-byte',
-    operator: 'MMMOCL',
   },
   {
     bppId: BppID.MMOPL,
     cityCode: 'std:022',
     kind: 'static-opaque',
-    operator: 'MMOPL',
   },
   {
     bppId: BppID.MMRCL,
     cityCode: 'std:022',
     kind: 'static-opaque',
-    operator: 'MMRCL',
   },
 ] as const
 
@@ -52,7 +47,6 @@ export type MetroQrPolicy = (typeof metroQrPolicies)[number]
 export type BppID = (typeof BppID)[keyof typeof BppID]
 export type KnownBppId = BppID
 export type MetroQrPolicyKind = MetroQrPolicy['kind']
-export type MetroQrPolicyOperator = MetroQrPolicy['operator']
 
 export interface AssertMetroQrPolicyParameters {
   readonly bppId: string | null | undefined

@@ -10,7 +10,7 @@ describe('MetroQR provider API', () => {
 
     expect(payload).toMatchObject({
       kind: 'text',
-      policy: { bppId: BppID.BMRCL, operator: 'BMRCL' },
+      policy: { bppId: BppID.BMRCL },
       text: 'synthetic-bmrcl-static-token-block#{66323ad2||0.0|0.0|}',
     })
   })
@@ -31,15 +31,15 @@ describe('MetroQR provider API', () => {
 
   test('builds static provider payloads without passing bppId', () => {
     expect(MetroQR.dmrc({ token: 'synthetic-dmrc-token' })).toMatchObject({
-      policy: { bppId: BppID.DMRC, operator: 'DMRC' },
+      policy: { bppId: BppID.DMRC },
       text: 'synthetic-dmrc-token',
     })
     expect(MetroQR.mmopl({ token: 'synthetic-mmopl-token' })).toMatchObject({
-      policy: { bppId: BppID.MMOPL, operator: 'MMOPL' },
+      policy: { bppId: BppID.MMOPL },
       text: 'synthetic-mmopl-token',
     })
     expect(MetroQR.mmrcl({ token: 'synthetic-mmrcl-token' })).toMatchObject({
-      policy: { bppId: BppID.MMRCL, operator: 'MMRCL' },
+      policy: { bppId: BppID.MMRCL },
       text: 'synthetic-mmrcl-token',
     })
   })
