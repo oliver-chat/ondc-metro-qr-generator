@@ -125,3 +125,16 @@ const policy = getMetroQrPolicy({ bppId: BppID.DMRC })
 - MMMOCL base64 payloads are encoded as raw QR byte segments.
 - BMRCL dynamic QR payloads include a generated timestamp block.
 - Public fixtures are synthetic and do not contain production ticket data.
+
+## Acknowledgements
+
+This package exists for the [ONDC](https://ondc.org/) metro ecosystem and uses
+provider QR policy documents shared by [Sequel String](https://www.sequelstring.com/).
+
+Runtime and validation dependencies include
+[node-qrcode](https://github.com/soldair/node-qrcode) for QR PNG generation and
+[zxing-wasm](https://github.com/Sec-ant/zxing-wasm) for QR decode integrity
+tests. The package is built with [Bun](https://bun.sh/),
+[TypeScript](https://www.typescriptlang.org/), [Biome](https://biomejs.dev/),
+[publint](https://publint.dev/), and
+[Are the Types Wrong?](https://arethetypeswrong.github.io/).
