@@ -121,13 +121,6 @@ import { BppID, getMetroQrPolicy } from 'ondc-metro-qr-generator'
 const policy = getMetroQrPolicy({ bppId: BppID.DMRC })
 ```
 
-## Guarantees
-
-- Unknown BPPs are rejected. They do not fall back to static QR behavior.
-- MMMOCL base64 payloads are encoded as raw QR byte segments.
-- BMRCL dynamic QR payloads include a generated timestamp block.
-- Public fixtures are synthetic and do not contain production ticket data.
-
 ## Acknowledgements
 
 This package exists for the [ONDC](https://ondc.org/) metro ecosystem and uses
