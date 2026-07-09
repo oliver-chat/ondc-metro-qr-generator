@@ -38,9 +38,15 @@ Configure npm trusted publishing for this package:
 The workflow uses OIDC trusted publishing, so it does not require an `NPM_TOKEN`
 secret.
 
-If Release Please cannot open release PRs, enable this repository setting:
+Release Please needs permission to open release PRs. Prefer enabling this
+repository setting:
 
 `Settings -> Actions -> General -> Allow GitHub Actions to create and approve pull requests`
+
+If the organization blocks that repository setting, create a repository secret
+named `RELEASE_PLEASE_TOKEN` using a narrowly scoped GitHub token that can create
+pull requests in this repository. The release workflow skips Release Please with
+a notice until either the repository setting or the token is configured.
 
 ## Initial Version
 

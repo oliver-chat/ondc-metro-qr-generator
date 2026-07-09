@@ -19,12 +19,21 @@ concurrency:
 jobs:
   release:
     runs-on: ubuntu-latest
+    env:
+      RELEASE_PLEASE_TOKEN: ${{ secrets.RELEASE_PLEASE_TOKEN }}
     steps:
+      - name: Check release token configuration
+        if: ${{ env.RELEASE_PLEASE_TOKEN == '' }}
+        run: |
+          echo "::notice title=Release token missing::Configure RELEASE_PLEASE_TOKEN or enable GitHub Actions PR creation for release automation."
+
       - id: release
+        if: ${{ env.RELEASE_PLEASE_TOKEN != '' }}
         uses: googleapis/release-please-action@v4
         with:
           config-file: release-please-config.json
           manifest-file: .release-please-manifest.json
+          token: ${{ env.RELEASE_PLEASE_TOKEN }}
 
       - uses: actions/checkout@v6
         if: ${{ steps.release.outputs.release_created == 'true' }}
