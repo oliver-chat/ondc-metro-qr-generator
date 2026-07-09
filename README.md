@@ -121,6 +121,15 @@ import { BppID, getMetroQrPolicy } from 'ondc-metro-qr-generator'
 const policy = getMetroQrPolicy({ bppId: BppID.DMRC })
 ```
 
+## Contributing
+
+Contributions are welcome for additional language packages, QR integrity tests,
+documentation, and BPP QR generation policies. We especially encourage BPPs to
+add their respective policy documents and methodologies for Pune, Chennai,
+Kochi, Nagpur, and other ONDC metro networks.
+
+See [CONTRIBUTING.md](./CONTRIBUTING.md) for contribution requirements.
+
 ## Acknowledgements
 
 This package exists for the [ONDC](https://ondc.org/) metro ecosystem and uses
