@@ -3,6 +3,14 @@
 Typed TypeScript utilities for generating ONDC metro ticket QR payloads and QR
 PNG images across supported metro BPPs.
 
+Generates QR payloads and pure QR PNGs for these metro BPPs:
+
+- BMRCL: `ondc-prod-bmrcl.sequelstring.com/seller/bmrcl`
+- DMRC: `ondc-prod-dmrc.sequelstring.com/seller/dmrc`
+- MMMOCL: `ondc-prod-mmmocl.sequelstring.com/seller/mmmocl`
+- MMOPL: `ondc-prod-mmmopl.sequelstring.com/seller/mmmopl`
+- MMRCL: `ondc-prod-mmmrcl.sequelstring.com/seller/mmmrcl`
+
 ## Install
 
 ```sh
