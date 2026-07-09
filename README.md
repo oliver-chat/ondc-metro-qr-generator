@@ -3,9 +3,6 @@
 Typed TypeScript utilities for generating ONDC metro ticket QR payloads and QR
 PNG images across supported metro BPPs.
 
-This package is being prepared privately first. Do not treat this repository as
-public launch material until Oliver explicitly approves publication.
-
 ## Install
 
 ```sh
