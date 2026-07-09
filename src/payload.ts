@@ -37,7 +37,7 @@ export interface MetroQrTextPayload {
  *
  * const payload = buildMetroQrPayload({
  *   bppId: BppID.DMRC,
- *   token: 'synthetic-provider-token',
+ *   token: 'qr-token',
  * })
  */
 export function buildMetroQrPayload({

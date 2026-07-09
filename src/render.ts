@@ -38,7 +38,7 @@ export interface RenderMetroQrPayloadPngReturnType {
  *
  * const { png } = await renderMetroQrPng({
  *   bppId: BppID.DMRC,
- *   token: 'synthetic-provider-token',
+ *   token: 'qr-token',
  * })
  */
 export async function renderMetroQrPng({
@@ -68,7 +68,7 @@ export async function renderMetroQrPng({
  *
  * const payload = buildMetroQrPayload({
  *   bppId: BppID.DMRC,
- *   token: 'synthetic-provider-token',
+ *   token: 'qr-token',
  * })
  * const { png } = await renderMetroQrPayloadPng({ payload })
  */

@@ -56,7 +56,7 @@ export interface MetroQRApi {
  * import { MetroQR } from 'ondc-metro-qr-generator'
  *
  * const payload = MetroQR.bmrcl({
- *   token: 'synthetic-provider-token',
+ *   token: 'qr-token',
  * })
  * const { png } = await MetroQR.renderPng({
  *   payload,

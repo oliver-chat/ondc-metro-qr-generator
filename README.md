@@ -24,7 +24,7 @@ bun add ondc-metro-qr-generator
 import { MetroQR } from 'ondc-metro-qr-generator'
 
 const payload = MetroQR.dmrc({
-  token: 'synthetic-provider-token',
+  token: 'qr-token',
 })
 const { png } = await MetroQR.renderPng({
   payload,
@@ -64,19 +64,19 @@ import { MetroQR } from 'ondc-metro-qr-generator'
 
 const bmrclPayload = MetroQR.bmrcl({
   nowMs: Date.now(),
-  token: 'synthetic-provider-token',
+  token: 'qr-token',
 })
 const dmrcPayload = MetroQR.dmrc({
-  token: 'synthetic-provider-token',
+  token: 'qr-token',
 })
 const mmmoclPayload = MetroQR.mmmocl({
   token: 'TU1NT/8AfA==',
 })
 const mmoplPayload = MetroQR.mmopl({
-  token: 'synthetic-provider-token',
+  token: 'qr-token',
 })
 const mmrclPayload = MetroQR.mmrcl({
-  token: 'synthetic-provider-token',
+  token: 'qr-token',
 })
 ```
 
@@ -84,7 +84,7 @@ const mmrclPayload = MetroQR.mmrcl({
 import { MetroQR } from 'ondc-metro-qr-generator'
 
 const payload = MetroQR.dmrc({
-  token: 'synthetic-provider-token',
+  token: 'qr-token',
 })
 const { png } = await MetroQR.renderPng({
   payload,
@@ -110,7 +110,7 @@ import { BppID, renderMetroQrPng } from 'ondc-metro-qr-generator'
 
 const { png } = await renderMetroQrPng({
   bppId: BppID.BMRCL,
-  token: 'synthetic-provider-token',
+  token: 'qr-token',
   width: 512,
 })
 ```
