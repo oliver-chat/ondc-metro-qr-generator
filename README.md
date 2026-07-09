@@ -16,6 +16,8 @@ their QR generation guidelines:
 
 ```sh
 bun add ondc-metro-qr-generator
+# or
+npm install ondc-metro-qr-generator
 ```
 
 ## Usage
