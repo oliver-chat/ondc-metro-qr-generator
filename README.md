@@ -6,11 +6,11 @@ PNG images across supported metro BPPs.
 Generates QR payloads and pure QR PNGs for these metro BPPs by adhering to
 their QR generation guidelines:
 
-- BMRCL: `ondc-prod-bmrcl.sequelstring.com/seller/bmrcl`
-- DMRC: `ondc-prod-dmrc.sequelstring.com/seller/dmrc`
-- MMMOCL: `ondc-prod-mmmocl.sequelstring.com/seller/mmmocl`
-- MMOPL: `ondc-prod-mmmopl.sequelstring.com/seller/mmmopl`
-- MMRCL: `ondc-prod-mmmrcl.sequelstring.com/seller/mmmrcl`
+- BMRCL
+- DMRC
+- MMMOCL
+- MMOPL
+- MMRCL
 
 ## Install
 
