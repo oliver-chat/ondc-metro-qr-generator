@@ -34,11 +34,11 @@ Current live BPP policy shape:
 
 | BPP | QR policy | Notes |
 | --- | --- | --- |
-| `ondc-prod-bmrcl.sequelstring.com/seller/bmrcl` | dynamic timestamp | Appends BMRCL dynamic block to static authorization. |
-| `ondc-prod-dmrc.sequelstring.com/seller/dmrc` | static opaque | Encodes authorization token unchanged. |
+| `ondc-prod-bmrcl.sequelstring.com/seller/bmrcl` | dynamic timestamp | Appends BMRCL dynamic block to provider token. |
+| `ondc-prod-dmrc.sequelstring.com/seller/dmrc` | static opaque | Encodes provider token unchanged. |
 | `ondc-prod-mmmocl.sequelstring.com/seller/mmmocl` | base64 byte mode | Decodes base64 token into raw byte-mode QR data. |
-| `ondc-prod-mmmopl.sequelstring.com/seller/mmmopl` | static opaque | Encodes authorization token unchanged. |
-| `ondc-prod-mmmrcl.sequelstring.com/seller/mmmrcl` | static opaque | Encodes authorization token unchanged. |
+| `ondc-prod-mmmopl.sequelstring.com/seller/mmmopl` | static opaque | Encodes provider token unchanged. |
+| `ondc-prod-mmmrcl.sequelstring.com/seller/mmmrcl` | static opaque | Encodes provider token unchanged. |
 
 Use synthetic provider-shaped fixtures in this package. Do not commit raw
 production QR tokens or production identifiers.
@@ -108,10 +108,19 @@ thermo-nuclear code-quality skill.
 Initial exports:
 
 ```ts
+BppID
+MetroQR.bmrcl(parameters): BuildMetroQrProviderReturnType
+MetroQR.dmrc(parameters): BuildMetroQrProviderReturnType
+MetroQR.mmmocl(parameters): BuildMetroQrProviderReturnType
+MetroQR.mmopl(parameters): BuildMetroQrProviderReturnType
+MetroQR.mmrcl(parameters): BuildMetroQrProviderReturnType
+MetroQR.renderPng(parameters): Promise<RenderMetroQrPayloadPngReturnType>
 buildMetroQrPayload(parameters): BuildMetroQrPayloadReturnType
+renderMetroQrPayloadPng(parameters): Promise<RenderMetroQrPayloadPngReturnType>
 renderMetroQrPng(parameters): Promise<RenderMetroQrPngReturnType>
 getMetroQrPolicy(parameters): GetMetroQrPolicyReturnType
 assertMetroQrPolicy(parameters): AssertMetroQrPolicyReturnType
+isKnownMetroQrBpp(parameters): IsKnownMetroQrBppReturnType
 buildBmrclDynamicBlock(parameters): BuildBmrclDynamicBlockReturnType
 MetroQrError
 UnsupportedMetroBppError
@@ -131,8 +140,8 @@ Payload shape:
 
 ```ts
 type MetroQrPayload =
-  | { kind: 'text'; value: string; policy: MetroQrPolicy }
-  | { kind: 'bytes'; value: Uint8Array; policy: MetroQrPolicy }
+  | { kind: 'text'; text: string; policy: MetroQrPolicy }
+  | { kind: 'bytes'; bytes: Uint8Array; policy: MetroQrPolicy }
 ```
 
 ## Sprint Plan

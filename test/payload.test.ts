@@ -1,5 +1,6 @@
 import { describe, expect, test } from 'bun:test'
 import {
+  BppID,
   buildBmrclDynamicBlock,
   buildMetroQrPayload,
   InvalidMetroQrTokenError,
@@ -10,13 +11,13 @@ describe('metro QR payload generation', () => {
   test('builds static opaque payloads without modifying token text', () => {
     expect(
       buildMetroQrPayload({
-        authorization: { type: 'QR', token: 'synthetic-static-token' },
-        bppId: 'ondc-prod-dmrc.sequelstring.com/seller/dmrc',
+        bppId: BppID.DMRC,
+        token: 'synthetic-static-token',
       }),
     ).toMatchObject({
       kind: 'text',
       policy: {
-        bppId: 'ondc-prod-dmrc.sequelstring.com/seller/dmrc',
+        bppId: BppID.DMRC,
         kind: 'static-opaque',
         operator: 'DMRC',
       },
@@ -31,8 +32,8 @@ describe('metro QR payload generation', () => {
     const token = btoa(String.fromCharCode(...sourceBytes))
 
     const payload = buildMetroQrPayload({
-      authorization: { type: 'QR', token },
-      bppId: 'ondc-prod-mmmocl.sequelstring.com/seller/mmmocl',
+      bppId: BppID.MMMOCL,
+      token,
     })
 
     expect(payload.kind).toBe('bytes')
@@ -47,12 +48,9 @@ describe('metro QR payload generation', () => {
     )
     expect(
       buildMetroQrPayload({
-        authorization: {
-          type: 'QR',
-          token: 'synthetic-bmrcl-static-authorization-block',
-        },
-        bppId: 'ondc-prod-bmrcl.sequelstring.com/seller/bmrcl',
+        bppId: BppID.BMRCL,
         nowMs: 1_714_567_890_000,
+        token: 'synthetic-bmrcl-static-token-block',
       }),
     ).toMatchObject({
       kind: 'text',
@@ -61,31 +59,25 @@ describe('metro QR payload generation', () => {
         operator: 'BMRCL',
         refreshSeconds: 30,
       },
-      text: 'synthetic-bmrcl-static-authorization-block#{66323ad2||0.0|0.0|}',
+      text: 'synthetic-bmrcl-static-token-block#{66323ad2||0.0|0.0|}',
     })
   })
 
   test('rejects unsupported BPP ids without falling back to static QR', () => {
     expect(() =>
       buildMetroQrPayload({
-        authorization: { type: 'QR', token: 'synthetic-token' },
+        // @ts-expect-error Runtime boundary rejects unsupported JavaScript callers.
         bppId: 'ondc-prod-unknown.example/seller/metro',
+        token: 'synthetic-token',
       }),
     ).toThrow(UnsupportedMetroBppError)
   })
 
-  test('rejects non-QR authorization and empty tokens', () => {
+  test('rejects empty tokens', () => {
     expect(() =>
       buildMetroQrPayload({
-        authorization: { type: 'BARCODE', token: 'synthetic-token' },
-        bppId: 'ondc-prod-dmrc.sequelstring.com/seller/dmrc',
-      }),
-    ).toThrow(InvalidMetroQrTokenError)
-
-    expect(() =>
-      buildMetroQrPayload({
-        authorization: { type: 'QR', token: '   ' },
-        bppId: 'ondc-prod-dmrc.sequelstring.com/seller/dmrc',
+        bppId: BppID.DMRC,
+        token: '   ',
       }),
     ).toThrow(InvalidMetroQrTokenError)
   })

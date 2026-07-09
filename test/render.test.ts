@@ -1,11 +1,11 @@
 import { describe, expect, test } from 'bun:test'
-import { renderMetroQrPng } from '../src/index.js'
+import { BppID, renderMetroQrPng } from '../src/index.js'
 
 describe('metro QR PNG rendering', () => {
   test('renders static opaque payloads as PNG bytes', async () => {
     const { payload, png } = await renderMetroQrPng({
-      authorization: { type: 'QR', token: 'synthetic-static-token' },
-      bppId: 'ondc-prod-dmrc.sequelstring.com/seller/dmrc',
+      bppId: BppID.DMRC,
+      token: 'synthetic-static-token',
     })
 
     expect(payload).toMatchObject({
@@ -22,11 +22,8 @@ describe('metro QR PNG rendering', () => {
       0x4d, 0x4d, 0x4d, 0x4f, 0xff, 0x00, 0x7c,
     ])
     const { payload, png } = await renderMetroQrPng({
-      authorization: {
-        type: 'QR',
-        token: btoa(String.fromCharCode(...sourceBytes)),
-      },
-      bppId: 'ondc-prod-mmmocl.sequelstring.com/seller/mmmocl',
+      bppId: BppID.MMMOCL,
+      token: btoa(String.fromCharCode(...sourceBytes)),
     })
 
     expect(payload.kind).toBe('bytes')
@@ -36,29 +33,23 @@ describe('metro QR PNG rendering', () => {
 
   test('renders BMRCL with caller-controlled dynamic timestamp', async () => {
     const first = await renderMetroQrPng({
-      authorization: {
-        type: 'QR',
-        token: 'synthetic-bmrcl-static-authorization-block',
-      },
-      bppId: 'ondc-prod-bmrcl.sequelstring.com/seller/bmrcl',
+      bppId: BppID.BMRCL,
       nowMs: 1_714_567_890_000,
+      token: 'synthetic-bmrcl-static-token-block',
     })
     const second = await renderMetroQrPng({
-      authorization: {
-        type: 'QR',
-        token: 'synthetic-bmrcl-static-authorization-block',
-      },
-      bppId: 'ondc-prod-bmrcl.sequelstring.com/seller/bmrcl',
+      bppId: BppID.BMRCL,
       nowMs: 1_714_567_920_000,
+      token: 'synthetic-bmrcl-static-token-block',
     })
 
     expect(first.payload).toMatchObject({
       kind: 'text',
-      text: 'synthetic-bmrcl-static-authorization-block#{66323ad2||0.0|0.0|}',
+      text: 'synthetic-bmrcl-static-token-block#{66323ad2||0.0|0.0|}',
     })
     expect(second.payload).toMatchObject({
       kind: 'text',
-      text: 'synthetic-bmrcl-static-authorization-block#{66323af0||0.0|0.0|}',
+      text: 'synthetic-bmrcl-static-token-block#{66323af0||0.0|0.0|}',
     })
     expect(first.png).not.toEqual(second.png)
   })

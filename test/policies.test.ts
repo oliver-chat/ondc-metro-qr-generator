@@ -1,5 +1,6 @@
 import { describe, expect, test } from 'bun:test'
 import {
+  BppID,
   getMetroQrPolicy,
   isKnownMetroQrBpp,
   type KnownBppId,
@@ -11,11 +12,11 @@ import {
 describe('metro QR policies', () => {
   test('covers every live BPP with exactly one policy', () => {
     expect(metroQrPolicies.map((policy) => policy.bppId)).toEqual([
-      'ondc-prod-bmrcl.sequelstring.com/seller/bmrcl',
-      'ondc-prod-dmrc.sequelstring.com/seller/dmrc',
-      'ondc-prod-mmmocl.sequelstring.com/seller/mmmocl',
-      'ondc-prod-mmmopl.sequelstring.com/seller/mmmopl',
-      'ondc-prod-mmmrcl.sequelstring.com/seller/mmmrcl',
+      BppID.BMRCL,
+      BppID.DMRC,
+      BppID.MMMOCL,
+      BppID.MMOPL,
+      BppID.MMRCL,
     ])
     expect(new Set(metroQrPolicies.map((policy) => policy.bppId)).size).toBe(
       metroQrPolicies.length,
@@ -58,13 +59,12 @@ describe('metro QR policies', () => {
   })
 
   test('derives literal public types from the canonical table', () => {
-    const knownBppId: KnownBppId =
-      'ondc-prod-mmmocl.sequelstring.com/seller/mmmocl'
+    const knownBppId: KnownBppId = BppID.MMMOCL
     const kind: MetroQrPolicyKind = 'base64-byte'
     const operator: MetroQrPolicyOperator = 'MMMOCL'
 
     expect({ knownBppId, kind, operator }).toEqual({
-      knownBppId: 'ondc-prod-mmmocl.sequelstring.com/seller/mmmocl',
+      knownBppId: BppID.MMMOCL,
       kind: 'base64-byte',
       operator: 'MMMOCL',
     })

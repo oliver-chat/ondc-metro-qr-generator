@@ -1,15 +1,14 @@
 import { InvalidMetroQrTokenError } from './errors.js'
-import { assertMetroQrPolicy, type MetroQrPolicy } from './policies.js'
-
-export interface MetroQrAuthorization {
-  readonly type: string
-  readonly token: string
-}
+import {
+  assertMetroQrPolicy,
+  type BppID,
+  type MetroQrPolicy,
+} from './policies.js'
 
 export interface BuildMetroQrPayloadParameters {
-  readonly authorization: MetroQrAuthorization
-  readonly bppId: string | null | undefined
+  readonly bppId: BppID
   readonly nowMs?: number
+  readonly token: string
 }
 
 export type BuildMetroQrPayloadReturnType = MetroQrPayload
@@ -34,25 +33,25 @@ export interface MetroQrTextPayload {
  * Builds the exact payload that should be encoded into an ONDC metro QR.
  *
  * @example
- * import { buildMetroQrPayload } from 'ondc-metro-qr-generator'
+ * import { BppID, buildMetroQrPayload } from 'ondc-metro-qr-generator'
  *
  * const payload = buildMetroQrPayload({
- *   authorization: { type: 'QR', token: 'synthetic-provider-token' },
- *   bppId: 'ondc-prod-dmrc.sequelstring.com/seller/dmrc',
+ *   bppId: BppID.DMRC,
+ *   token: 'synthetic-provider-token',
  * })
  */
 export function buildMetroQrPayload({
-  authorization,
   bppId,
   nowMs = Date.now(),
+  token,
 }: BuildMetroQrPayloadParameters): BuildMetroQrPayloadReturnType {
-  assertQrAuthorization(authorization)
+  assertQrToken(token)
   const policy = assertMetroQrPolicy({ bppId })
 
   switch (policy.kind) {
     case 'base64-byte':
       return {
-        bytes: decodeBase64Token(authorization.token),
+        bytes: decodeBase64Token(token),
         kind: 'bytes',
         policy,
       }
@@ -60,13 +59,13 @@ export function buildMetroQrPayload({
       return {
         kind: 'text',
         policy,
-        text: `${authorization.token}#${buildBmrclDynamicBlock({ nowMs })}`,
+        text: `${token}#${buildBmrclDynamicBlock({ nowMs })}`,
       }
     case 'static-opaque':
       return {
         kind: 'text',
         policy,
-        text: authorization.token,
+        text: token,
       }
   }
 }
@@ -78,8 +77,8 @@ export interface BuildBmrclDynamicBlockParameters {
 export type BuildBmrclDynamicBlockReturnType = string
 
 /**
- * Builds the dynamic block BMRCL expects buyer apps to append to the static
- * authorization block.
+ * Builds the dynamic block BMRCL expects buyer apps to append to the provider
+ * token.
  */
 export function buildBmrclDynamicBlock({
   nowMs = Date.now(),
@@ -88,16 +87,10 @@ export function buildBmrclDynamicBlock({
   return `{${epochHex}||0.0|0.0|}`
 }
 
-function assertQrAuthorization(authorization: MetroQrAuthorization): void {
-  if (authorization.type.trim().toUpperCase() !== 'QR') {
+function assertQrToken(token: string): void {
+  if (token.trim().length === 0) {
     throw new InvalidMetroQrTokenError({
-      reason: `authorization type must be QR, received ${authorization.type}`,
-    })
-  }
-
-  if (authorization.token.trim().length === 0) {
-    throw new InvalidMetroQrTokenError({
-      reason: 'authorization token is empty',
+      reason: 'token is empty',
     })
   }
 }

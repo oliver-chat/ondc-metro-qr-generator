@@ -1,6 +1,6 @@
 import { describe, expect, test } from 'bun:test'
 import { readBarcodes } from 'zxing-wasm/reader'
-import { renderMetroQrPng } from '../src/index.js'
+import { BppID, renderMetroQrPng } from '../src/index.js'
 
 const textEncoder = new TextEncoder()
 
@@ -8,30 +8,30 @@ const mmoclBytes = new Uint8Array([0x4d, 0x4d, 0x4d, 0x4f, 0xff, 0x00, 0x7c])
 
 const integrityFixtures = [
   {
-    bppId: 'ondc-prod-bmrcl.sequelstring.com/seller/bmrcl',
+    bppId: BppID.BMRCL,
     expectedBytes: textEncoder.encode(
-      'synthetic-bmrcl-static-authorization-block#{66323ad2||0.0|0.0|}',
+      'synthetic-bmrcl-static-token-block#{66323ad2||0.0|0.0|}',
     ),
     nowMs: 1_714_567_890_000,
-    token: 'synthetic-bmrcl-static-authorization-block',
+    token: 'synthetic-bmrcl-static-token-block',
   },
   {
-    bppId: 'ondc-prod-dmrc.sequelstring.com/seller/dmrc',
+    bppId: BppID.DMRC,
     expectedBytes: textEncoder.encode('synthetic-dmrc-static-token'),
     token: 'synthetic-dmrc-static-token',
   },
   {
-    bppId: 'ondc-prod-mmmocl.sequelstring.com/seller/mmmocl',
+    bppId: BppID.MMMOCL,
     expectedBytes: mmoclBytes,
     token: btoa(String.fromCharCode(...mmoclBytes)),
   },
   {
-    bppId: 'ondc-prod-mmmopl.sequelstring.com/seller/mmmopl',
+    bppId: BppID.MMOPL,
     expectedBytes: textEncoder.encode('synthetic-mmmopl-static-token'),
     token: 'synthetic-mmmopl-static-token',
   },
   {
-    bppId: 'ondc-prod-mmmrcl.sequelstring.com/seller/mmmrcl',
+    bppId: BppID.MMRCL,
     expectedBytes: textEncoder.encode('synthetic-mmmrcl-static-token'),
     token: 'synthetic-mmmrcl-static-token',
   },
@@ -41,8 +41,8 @@ describe('QR integrity', () => {
   for (const fixture of integrityFixtures) {
     test(`decodes generated QR bytes for ${fixture.bppId}`, async () => {
       const { png } = await renderMetroQrPng({
-        authorization: { type: 'QR', token: fixture.token },
         bppId: fixture.bppId,
+        token: fixture.token,
         ...('nowMs' in fixture ? { nowMs: fixture.nowMs } : {}),
       })
 

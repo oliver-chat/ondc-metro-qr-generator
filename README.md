@@ -25,15 +25,73 @@ bun add ondc-metro-qr-generator
 ## Usage
 
 ```ts
-import { renderMetroQrPng } from 'ondc-metro-qr-generator'
+import { MetroQR } from 'ondc-metro-qr-generator'
+
+const payload = MetroQR.dmrc({
+  token: 'synthetic-provider-token',
+})
+const { png } = await MetroQR.renderPng({ payload })
+```
+
+## Public Methods
+
+### High-Level Provider API
+
+```ts
+import { MetroQR } from 'ondc-metro-qr-generator'
+
+const bmrclPayload = MetroQR.bmrcl({
+  nowMs: Date.now(),
+  token: 'synthetic-provider-token',
+})
+const dmrcPayload = MetroQR.dmrc({
+  token: 'synthetic-provider-token',
+})
+const mmmoclPayload = MetroQR.mmmocl({
+  token: 'TU1NT/8AfA==',
+})
+const mmoplPayload = MetroQR.mmopl({
+  token: 'synthetic-provider-token',
+})
+const mmrclPayload = MetroQR.mmrcl({
+  token: 'synthetic-provider-token',
+})
+```
+
+```ts
+import { MetroQR } from 'ondc-metro-qr-generator'
+
+const payload = MetroQR.dmrc({
+  token: 'synthetic-provider-token',
+})
+const { png } = await MetroQR.renderPng({ payload })
+```
+
+### Low-Level API
+
+```ts
+import { BppID, buildMetroQrPayload } from 'ondc-metro-qr-generator'
+
+const payload = buildMetroQrPayload({
+  bppId: BppID.MMMOCL,
+  token: 'TU1NT/8AfA==',
+})
+```
+
+```ts
+import { BppID, renderMetroQrPng } from 'ondc-metro-qr-generator'
 
 const { png } = await renderMetroQrPng({
-  authorization: {
-    type: 'QR',
-    token: 'synthetic-provider-token',
-  },
-  bppId: 'ondc-prod-dmrc.sequelstring.com/seller/dmrc',
+  bppId: BppID.BMRCL,
+  token: 'synthetic-provider-token',
+  width: 512,
 })
+```
+
+```ts
+import { BppID, getMetroQrPolicy } from 'ondc-metro-qr-generator'
+
+const policy = getMetroQrPolicy({ bppId: BppID.DMRC })
 ```
 
 ## Guarantees
@@ -42,4 +100,3 @@ const { png } = await renderMetroQrPng({
 - MMMOCL base64 payloads are encoded as raw QR byte segments.
 - BMRCL dynamic QR payloads include a generated timestamp block.
 - Public fixtures are synthetic and do not contain production ticket data.
-
