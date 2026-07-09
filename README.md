@@ -16,6 +16,11 @@ public launch material until Oliver explicitly approves publication.
 | MMOPL | Static QR |
 | MMRCL | Static QR |
 
+## Provider Policy Documents
+
+- [BMRCL QR ticket generation process](./docs/provider-policies/BMRCL-QR-ticket-generation-process.pdf)
+- [MMMOCL QR ticket generation process](./docs/provider-policies/MMMOCL-QR-ticket-generation-process.pdf)
+
 ## Install
 
 ```sh
