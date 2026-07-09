@@ -6,25 +6,6 @@ PNG images across supported metro BPPs.
 This package is being prepared privately first. Do not treat this repository as
 public launch material until Oliver explicitly approves publication.
 
-## Supported Policies
-
-| BPP | Policy |
-| --- | --- |
-| BMRCL | Dynamic timestamp QR |
-| DMRC | Static QR |
-| MMMOCL | Base64 decoded byte-mode QR |
-| MMOPL | Static QR |
-| MMRCL | Static QR |
-
-## Provider Policy Documents
-
-- [BMRCL QR ticket generation process](./docs/provider-policies/BMRCL-QR-ticket-generation-process.pdf)
-- [MMMOCL QR ticket generation process](./docs/provider-policies/MMMOCL-QR-ticket-generation-process.pdf)
-
-## License
-
-Apache-2.0. See [LICENSE](./LICENSE) and [NOTICE](./NOTICE).
-
 ## Install
 
 ```sh
@@ -49,11 +30,26 @@ const { png } = await MetroQR.renderPng({
 })
 ```
 
+## Supported Policies
+
+| BPP | Policy |
+| --- | --- |
+| BMRCL | Dynamic timestamp QR |
+| DMRC | Static QR |
+| MMMOCL | Base64 decoded byte-mode QR |
+| MMOPL | Static QR |
+| MMRCL | Static QR |
+
 Supported BPP ids are the `BppID` constants defined in
 [`src/policies.ts`](./src/policies.ts#L6-L12). Those are the only BPPs this
 package supports.
 
-## Public Methods
+## Provider Policy Documents
+
+- [BMRCL QR ticket generation process](./docs/provider-policies/BMRCL-QR-ticket-generation-process.pdf)
+- [MMMOCL QR ticket generation process](./docs/provider-policies/MMMOCL-QR-ticket-generation-process.pdf)
+
+## Examples
 
 ### High-Level Provider API
 
@@ -138,3 +134,7 @@ tests. The package is built with [Bun](https://bun.sh/),
 [TypeScript](https://www.typescriptlang.org/), [Biome](https://biomejs.dev/),
 [publint](https://publint.dev/), and
 [Are the Types Wrong?](https://arethetypeswrong.github.io/).
+
+## License
+
+Apache-2.0. See [LICENSE](./LICENSE) and [NOTICE](./NOTICE).
