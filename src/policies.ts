@@ -1,3 +1,5 @@
+import { UnsupportedMetroBppError } from './errors.js'
+
 export const metroQrPolicies = [
   {
     bppId: 'ondc-prod-bmrcl.sequelstring.com/seller/bmrcl',
@@ -36,6 +38,24 @@ export type MetroQrPolicy = (typeof metroQrPolicies)[number]
 export type KnownBppId = MetroQrPolicy['bppId']
 export type MetroQrPolicyKind = MetroQrPolicy['kind']
 export type MetroQrPolicyOperator = MetroQrPolicy['operator']
+
+export interface AssertMetroQrPolicyParameters {
+  readonly bppId: string | null | undefined
+}
+
+export type AssertMetroQrPolicyReturnType = MetroQrPolicy
+
+/**
+ * Returns the supported ONDC metro QR policy for a BPP id, or throws when the
+ * BPP does not have an explicit policy.
+ */
+export function assertMetroQrPolicy({
+  bppId,
+}: AssertMetroQrPolicyParameters): AssertMetroQrPolicyReturnType {
+  const policy = getMetroQrPolicy({ bppId })
+  if (!policy) throw new UnsupportedMetroBppError({ bppId })
+  return policy
+}
 
 export interface GetMetroQrPolicyParameters {
   readonly bppId: string | null | undefined
