@@ -96,6 +96,33 @@ const { png } = await MetroQR.renderPng({
 })
 ```
 
+### BMRCL Offline Refresh
+
+```ts
+import { MetroQR } from 'ondc-metro-qr-generator'
+
+// Cache the BMRCL QR token from the confirmed ticket while online.
+const cachedBmrclQrToken = await ticketStore.get('bmrcl-qr-token')
+
+async function refreshBmrclQrPng({ nowMs = Date.now() } = {}) {
+  const payload = MetroQR.bmrcl({
+    nowMs,
+    token: cachedBmrclQrToken,
+  })
+
+  return MetroQR.renderPng({
+    payload,
+    qrOptions: {
+      width: 512,
+    },
+  })
+}
+
+// The provider token stays cached; the BMRCL dynamic QR block refreshes locally.
+const { png } = await refreshBmrclQrPng()
+setInterval(refreshBmrclQrPng, 30_000)
+```
+
 ### Low-Level API
 
 ```ts
