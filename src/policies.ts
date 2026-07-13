@@ -9,15 +9,11 @@ export const BppID = {
   MMMOCL: 'ondc-prod-mmmocl.sequelstring.com/seller/mmmocl',
   MMOPL: 'ondc-prod-mmmopl.sequelstring.com/seller/mmmopl',
   MMRCL: 'ondc-prod-mmmrcl.sequelstring.com/seller/mmmrcl',
-} as const
-
-/**
- * Exact preprod BPP ids that share a supported production QR policy.
- */
-export const PreprodBppID = {
-  BMRCL: 'ondc-preprod.sequelstring.com/seller/bmrcl',
-  DMRC: 'ondc-preprod.sequelstring.com/seller/dmrc',
-  MMMOCL: 'ondc-preprod.sequelstring.com/seller/mmocl',
+  preprod: {
+    BMRCL: 'ondc-preprod.sequelstring.com/seller/bmrcl',
+    DMRC: 'ondc-preprod.sequelstring.com/seller/dmrc',
+    MMMOCL: 'ondc-preprod.sequelstring.com/seller/mmocl',
+  },
 } as const
 
 /**
@@ -25,42 +21,43 @@ export const PreprodBppID = {
  */
 export const metroQrPolicies = [
   {
-    bppAliases: [PreprodBppID.BMRCL],
     bppId: BppID.BMRCL,
     cityCode: 'std:080',
     kind: 'dynamic-timestamp',
+    preprodBppId: BppID.preprod.BMRCL,
     refreshSeconds: 30,
   },
   {
-    bppAliases: [PreprodBppID.DMRC],
     bppId: BppID.DMRC,
     cityCode: 'std:011',
     kind: 'static',
+    preprodBppId: BppID.preprod.DMRC,
   },
   {
-    bppAliases: [PreprodBppID.MMMOCL],
     bppId: BppID.MMMOCL,
     cityCode: 'std:022',
     kind: 'base64-byte',
+    preprodBppId: BppID.preprod.MMMOCL,
   },
   {
-    bppAliases: [],
     bppId: BppID.MMOPL,
     cityCode: 'std:022',
     kind: 'static',
+    preprodBppId: null,
   },
   {
-    bppAliases: [],
     bppId: BppID.MMRCL,
     cityCode: 'std:022',
     kind: 'static',
+    preprodBppId: null,
   },
 ] as const
 
 export type MetroQrPolicy = (typeof metroQrPolicies)[number]
-export type BppID = (typeof BppID)[keyof typeof BppID]
-export type PreprodBppID = (typeof PreprodBppID)[keyof typeof PreprodBppID]
-export type KnownBppId = BppID | PreprodBppID
+export type BppID = (typeof BppID)[Exclude<keyof typeof BppID, 'preprod'>]
+export type KnownBppId =
+  | BppID
+  | (typeof BppID.preprod)[keyof typeof BppID.preprod]
 export type MetroQrPolicyKind = MetroQrPolicy['kind']
 
 export interface AssertMetroQrPolicyParameters {
@@ -103,10 +100,10 @@ export function getMetroQrPolicy({
   const normalizedBppId = normalizeBppId(bppId)
   if (!normalizedBppId) return null
   return (
-    metroQrPolicies.find((policy) =>
-      [policy.bppId, ...policy.bppAliases].some(
-        (knownBppId) => normalizeBppId(knownBppId) === normalizedBppId,
-      ),
+    metroQrPolicies.find(
+      (policy) =>
+        normalizeBppId(policy.bppId) === normalizedBppId ||
+        normalizeBppId(policy.preprodBppId) === normalizedBppId,
     ) ?? null
   )
 }

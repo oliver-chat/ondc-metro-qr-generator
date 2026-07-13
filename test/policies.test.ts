@@ -7,7 +7,6 @@ import {
   type KnownBppId,
   type MetroQrPolicyKind,
   metroQrPolicies,
-  PreprodBppID,
   UnsupportedMetroBppError,
 } from '../src/index.js'
 
@@ -26,11 +25,11 @@ describe('metro QR policies', () => {
   })
 
   // Regression test for https://github.com/oliver-chat/ondc-metro-qr-generator/issues/2: preprod ids resolve through the package policy table.
-  test('resolves exact preprod aliases to their production policies', () => {
+  test('resolves exact preprod ids to their production policies', () => {
     const environmentPairs = [
-      [BppID.BMRCL, PreprodBppID.BMRCL],
-      [BppID.DMRC, PreprodBppID.DMRC],
-      [BppID.MMMOCL, PreprodBppID.MMMOCL],
+      [BppID.BMRCL, BppID.preprod.BMRCL],
+      [BppID.DMRC, BppID.preprod.DMRC],
+      [BppID.MMMOCL, BppID.preprod.MMMOCL],
     ] as const
 
     for (const [productionBppId, preprodBppId] of environmentPairs) {
@@ -58,10 +57,10 @@ describe('metro QR policies', () => {
         bppId: ' ONDC-PROD-BMRCL.SEQUELSTRING.COM/SELLER/BMRCL/ ',
       }),
     ).toEqual({
-      bppAliases: [PreprodBppID.BMRCL],
       bppId: 'ondc-prod-bmrcl.sequelstring.com/seller/bmrcl',
       cityCode: 'std:080',
       kind: 'dynamic-timestamp',
+      preprodBppId: BppID.preprod.BMRCL,
       refreshSeconds: 30,
     })
   })
@@ -81,11 +80,11 @@ describe('metro QR policies', () => {
   })
 
   test('derives literal public types from the canonical table', () => {
-    const knownBppId: KnownBppId = PreprodBppID.MMMOCL
+    const knownBppId: KnownBppId = BppID.preprod.MMMOCL
     const kind: MetroQrPolicyKind = 'base64-byte'
 
     expect({ knownBppId, kind }).toEqual({
-      knownBppId: PreprodBppID.MMMOCL,
+      knownBppId: BppID.preprod.MMMOCL,
       kind: 'base64-byte',
     })
   })

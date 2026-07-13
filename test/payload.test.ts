@@ -4,7 +4,6 @@ import {
   buildBmrclDynamicBlock,
   buildMetroQrPayload,
   InvalidMetroQrTokenError,
-  PreprodBppID,
   UnsupportedMetroBppError,
 } from '../src/index.js'
 
@@ -67,7 +66,7 @@ describe('metro QR payload generation', () => {
   test('builds payloads directly from exact preprod BPP ids', () => {
     expect(
       buildMetroQrPayload({
-        bppId: PreprodBppID.DMRC,
+        bppId: BppID.preprod.DMRC,
         token: 'synthetic-static-token',
       }),
     ).toEqual(
