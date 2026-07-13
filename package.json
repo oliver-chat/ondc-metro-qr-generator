@@ -1,6 +1,6 @@
 {
   "name": "ondc-metro-qr-generator",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Typed ONDC metro QR payload and PNG generation for supported BPP policies.",
   "license": "Apache-2.0",
   "author": "Oliver Chat",
