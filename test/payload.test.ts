@@ -4,6 +4,7 @@ import {
   buildBmrclDynamicBlock,
   buildMetroQrPayload,
   InvalidMetroQrTokenError,
+  PreprodBppID,
   UnsupportedMetroBppError,
 } from '../src/index.js'
 
@@ -62,10 +63,25 @@ describe('metro QR payload generation', () => {
     })
   })
 
+  // Regression test for https://github.com/oliver-chat/ondc-metro-qr-generator/issues/2: payload generation accepts the original preprod callback id.
+  test('builds payloads directly from exact preprod BPP ids', () => {
+    expect(
+      buildMetroQrPayload({
+        bppId: PreprodBppID.DMRC,
+        token: 'synthetic-static-token',
+      }),
+    ).toEqual(
+      buildMetroQrPayload({
+        bppId: BppID.DMRC,
+        token: 'synthetic-static-token',
+      }),
+    )
+  })
+
+  // Regression test for https://github.com/oliver-chat/ondc-metro-qr-generator/issues/2: unknown ids never inherit a known provider policy.
   test('rejects unsupported BPP ids without falling back to static QR', () => {
     expect(() =>
       buildMetroQrPayload({
-        // @ts-expect-error Runtime boundary rejects unsupported JavaScript callers.
         bppId: 'ondc-prod-unknown.example/seller/metro',
         token: 'synthetic-token',
       }),

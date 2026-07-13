@@ -48,9 +48,10 @@ const { png } = await MetroQR.renderPng({
 | MMOPL | Static QR |
 | MMRCL | Static QR |
 
-Supported BPP ids are the `BppID` constants defined in
-[`src/policies.ts`](./src/policies.ts#L6-L12). Those are the only BPPs this
-package supports.
+Supported production BPP ids are the `BppID` constants and their exact preprod
+aliases are the `PreprodBppID` constants defined in
+[`src/policies.ts`](./src/policies.ts). Those are the only BPP ids this package
+supports.
 
 ## Provider Policy Documents
 
