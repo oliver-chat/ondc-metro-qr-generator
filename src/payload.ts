@@ -1,12 +1,8 @@
 import { InvalidMetroQrTokenError } from './errors.js'
-import {
-  assertMetroQrPolicy,
-  type BppID,
-  type MetroQrPolicy,
-} from './policies.js'
+import { assertMetroQrPolicy, type MetroQrPolicy } from './policies.js'
 
 export interface BuildMetroQrPayloadParameters {
-  readonly bppId: BppID
+  readonly bppId: string | null | undefined
   readonly nowMs?: number
   readonly token: string
 }
