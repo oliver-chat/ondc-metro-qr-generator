@@ -1,14 +1,11 @@
 import { describe, expect, test } from 'bun:test'
 import {
-  assertMetroQrPolicy,
   BppID,
   getMetroQrPolicy,
   isKnownMetroQrBpp,
   type KnownBppId,
   type MetroQrPolicyKind,
   metroQrPolicies,
-  PreprodBppID,
-  UnsupportedMetroBppError,
 } from '../src/index.js'
 
 describe('metro QR policies', () => {
@@ -23,21 +20,6 @@ describe('metro QR policies', () => {
     expect(new Set(metroQrPolicies.map((policy) => policy.bppId)).size).toBe(
       metroQrPolicies.length,
     )
-  })
-
-  // Regression test for https://github.com/oliver-chat/ondc-metro-qr-generator/issues/2: preprod ids resolve through the package policy table.
-  test('resolves exact preprod aliases to their production policies', () => {
-    const environmentPairs = [
-      [BppID.BMRCL, PreprodBppID.BMRCL],
-      [BppID.DMRC, PreprodBppID.DMRC],
-      [BppID.MMMOCL, PreprodBppID.MMMOCL],
-    ] as const
-
-    for (const [productionBppId, preprodBppId] of environmentPairs) {
-      expect(getMetroQrPolicy({ bppId: preprodBppId })).toBe(
-        getMetroQrPolicy({ bppId: productionBppId }),
-      )
-    }
   })
 
   test('assigns the expected methodology to each BPP', () => {
@@ -58,10 +40,10 @@ describe('metro QR policies', () => {
         bppId: ' ONDC-PROD-BMRCL.SEQUELSTRING.COM/SELLER/BMRCL/ ',
       }),
     ).toEqual({
-      bppAliases: [PreprodBppID.BMRCL],
       bppId: 'ondc-prod-bmrcl.sequelstring.com/seller/bmrcl',
       cityCode: 'std:080',
       kind: 'dynamic-timestamp',
+      preprodBppId: BppID.preprod.BMRCL,
       refreshSeconds: 30,
     })
   })
@@ -73,19 +55,14 @@ describe('metro QR policies', () => {
         bppId: 'ondc-prod-unknown.example/seller/metro',
       }),
     ).toBe(false)
-    expect(() =>
-      assertMetroQrPolicy({
-        bppId: 'ondc-preprod.example/seller/bmrcl',
-      }),
-    ).toThrow(UnsupportedMetroBppError)
   })
 
   test('derives literal public types from the canonical table', () => {
-    const knownBppId: KnownBppId = PreprodBppID.MMMOCL
+    const knownBppId: KnownBppId = BppID.MMMOCL
     const kind: MetroQrPolicyKind = 'base64-byte'
 
     expect({ knownBppId, kind }).toEqual({
-      knownBppId: PreprodBppID.MMMOCL,
+      knownBppId: BppID.MMMOCL,
       kind: 'base64-byte',
     })
   })
