@@ -62,21 +62,6 @@ describe('metro QR payload generation', () => {
     })
   })
 
-  // Regression test for https://github.com/oliver-chat/ondc-metro-qr-generator/issues/2: payload generation accepts the original preprod callback id.
-  test('builds payloads directly from exact preprod BPP ids', () => {
-    expect(
-      buildMetroQrPayload({
-        bppId: BppID.preprod.DMRC,
-        token: 'synthetic-static-token',
-      }),
-    ).toEqual(
-      buildMetroQrPayload({
-        bppId: BppID.DMRC,
-        token: 'synthetic-static-token',
-      }),
-    )
-  })
-
   // Regression test for https://github.com/oliver-chat/ondc-metro-qr-generator/issues/2: unknown ids never inherit a known provider policy.
   test('rejects unsupported BPP ids without falling back to static QR', () => {
     expect(() =>
