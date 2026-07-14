@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.0.4](https://github.com/oliver-chat/ondc-metro-qr-generator/compare/ondc-metro-qr-generator-v0.0.3...ondc-metro-qr-generator-v0.0.4) (2026-07-14)
+
+
+### Bug Fixes
+
+* **policies:** expose all preprod BPP IDs ([#8](https://github.com/oliver-chat/ondc-metro-qr-generator/issues/8)) ([d5d44ab](https://github.com/oliver-chat/ondc-metro-qr-generator/commit/d5d44ab31be1de20ca152c6c3cebda81a545b9f6))
+
 ## [0.0.3](https://github.com/oliver-chat/ondc-metro-qr-generator/compare/ondc-metro-qr-generator-v0.0.2...ondc-metro-qr-generator-v0.0.3) (2026-07-13)
 
 
