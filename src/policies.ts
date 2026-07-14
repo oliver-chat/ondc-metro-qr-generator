@@ -13,6 +13,8 @@ export const BppID = {
     BMRCL: 'ondc-preprod.sequelstring.com/seller/bmrcl',
     DMRC: 'ondc-preprod.sequelstring.com/seller/dmrc',
     MMMOCL: 'ondc-preprod.sequelstring.com/seller/mmocl',
+    MMOPL: 'ondc-preprod.sequelstring.com/seller/mmmopl',
+    MMRCL: 'ondc-preprod.sequelstring.com/seller/mmrcl',
   },
 } as const
 
@@ -43,13 +45,13 @@ export const metroQrPolicies = [
     bppId: BppID.MMOPL,
     cityCode: 'std:022',
     kind: 'static',
-    preprodBppId: null,
+    preprodBppId: BppID.preprod.MMOPL,
   },
   {
     bppId: BppID.MMRCL,
     cityCode: 'std:022',
     kind: 'static',
-    preprodBppId: null,
+    preprodBppId: BppID.preprod.MMRCL,
   },
 ] as const
 
