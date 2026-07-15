@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.0.5](https://github.com/oliver-chat/ondc-metro-qr-generator/compare/ondc-metro-qr-generator-v0.0.4...ondc-metro-qr-generator-v0.0.5) (2026-07-15)
+
+
+### Bug Fixes
+
+* **render:** select QR renderer by runtime ([#11](https://github.com/oliver-chat/ondc-metro-qr-generator/issues/11)) ([1b16e21](https://github.com/oliver-chat/ondc-metro-qr-generator/commit/1b16e2185788f13c4020c16099e7ef2598ddb56c))
+
 ## [0.0.4](https://github.com/oliver-chat/ondc-metro-qr-generator/compare/ondc-metro-qr-generator-v0.0.3...ondc-metro-qr-generator-v0.0.4) (2026-07-14)
 
 
