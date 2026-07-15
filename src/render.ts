@@ -1,5 +1,4 @@
-import type { QRCodeSegment, QRCodeToBufferOptions } from 'qrcode'
-import * as QRCode from 'qrcode'
+import type { QRCodeSegment } from 'qrcode'
 import {
   type BuildMetroQrPayloadParameters,
   buildMetroQrPayload,
@@ -30,64 +29,62 @@ export interface RenderMetroQrPayloadPngReturnType {
   readonly png: Uint8Array
 }
 
-/**
- * Renders an ONDC metro QR payload into PNG bytes.
- *
- * @example
- * import { BppID, renderMetroQrPng } from 'ondc-metro-qr-generator'
- *
- * const { png } = await renderMetroQrPng({
- *   bppId: BppID.DMRC,
- *   token: 'qr-token',
- * })
- */
-export async function renderMetroQrPng({
-  errorCorrectionLevel = 'M',
-  margin = 1,
-  width = 512,
-  ...payloadParameters
-}: RenderMetroQrPngParameters): Promise<RenderMetroQrPngReturnType> {
-  const payload = buildMetroQrPayload(payloadParameters)
-  const { png } = await renderMetroQrPayloadPng({
-    errorCorrectionLevel,
-    margin,
-    payload,
-    width,
-  })
-  return {
-    payload,
-    png,
-  }
+export interface MetroQrPngRenderer {
+  readonly renderMetroQrPayloadPng: (
+    parameters: RenderMetroQrPayloadPngParameters,
+  ) => Promise<RenderMetroQrPayloadPngReturnType>
+  readonly renderMetroQrPng: (
+    parameters: RenderMetroQrPngParameters,
+  ) => Promise<RenderMetroQrPngReturnType>
 }
 
-/**
- * Renders a pre-built ONDC metro QR payload into PNG bytes.
- *
- * @example
- * import { BppID, buildMetroQrPayload, renderMetroQrPayloadPng } from 'ondc-metro-qr-generator'
- *
- * const payload = buildMetroQrPayload({
- *   bppId: BppID.DMRC,
- *   token: 'qr-token',
- * })
- * const { png } = await renderMetroQrPayloadPng({ payload })
- */
-export async function renderMetroQrPayloadPng({
-  errorCorrectionLevel = 'M',
-  margin = 1,
-  payload,
-  width = 512,
-}: RenderMetroQrPayloadPngParameters): Promise<RenderMetroQrPayloadPngReturnType> {
-  const options: QRCodeToBufferOptions = {
-    errorCorrectionLevel,
-    margin,
-    type: 'png',
-    width,
+export interface EncodeQrPngParameters {
+  readonly errorCorrectionLevel: QrErrorCorrectionLevel
+  readonly input: string | QRCodeSegment[]
+  readonly margin: number
+  readonly width: number
+}
+
+export type EncodeQrPng = (
+  parameters: EncodeQrPngParameters,
+) => Promise<Uint8Array>
+
+export function createMetroQrPngRenderer(
+  encodeQrPng: EncodeQrPng,
+): MetroQrPngRenderer {
+  async function renderMetroQrPayloadPng({
+    errorCorrectionLevel = 'M',
+    margin = 1,
+    payload,
+    width = 512,
+  }: RenderMetroQrPayloadPngParameters): Promise<RenderMetroQrPayloadPngReturnType> {
+    return {
+      png: await encodeQrPng({
+        errorCorrectionLevel,
+        input: qrCodeInputFromPayload(payload),
+        margin,
+        width,
+      }),
+    }
   }
-  const png = await QRCode.toBuffer(qrCodeInputFromPayload(payload), options)
-  return {
-    png: new Uint8Array(png),
+
+  async function renderMetroQrPng({
+    errorCorrectionLevel = 'M',
+    margin = 1,
+    width = 512,
+    ...payloadParameters
+  }: RenderMetroQrPngParameters): Promise<RenderMetroQrPngReturnType> {
+    const payload = buildMetroQrPayload(payloadParameters)
+    const { png } = await renderMetroQrPayloadPng({
+      errorCorrectionLevel,
+      margin,
+      payload,
+      width,
+    })
+    return { payload, png }
   }
+
+  return { renderMetroQrPayloadPng, renderMetroQrPng }
 }
 
 function qrCodeInputFromPayload(
