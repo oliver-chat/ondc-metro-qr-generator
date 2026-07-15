@@ -2,6 +2,7 @@ import { describe, expect, test } from 'bun:test'
 import { BppID, renderMetroQrPng } from '../src/index.js'
 
 describe('metro QR PNG rendering', () => {
+  // Regression test for https://github.com/oliver-chat/ondc-metro-qr-generator/issues/10: server runtimes explicitly use the qrcode server implementation.
   test('renders static payloads as PNG bytes', async () => {
     const { payload, png } = await renderMetroQrPng({
       bppId: BppID.DMRC,

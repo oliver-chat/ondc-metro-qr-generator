@@ -38,6 +38,11 @@ const { png } = await MetroQR.renderPng({
 })
 ```
 
+The package selects its PNG renderer through conditional exports. Cloudflare
+Workers, Node.js, and Bun use the `qrcode` server implementation; browser
+bundlers use the Canvas-based browser implementation. The public API and PNG
+return type are identical in every runtime.
+
 ## Supported Policies
 
 | BPP | Policy |

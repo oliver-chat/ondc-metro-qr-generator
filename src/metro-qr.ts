@@ -3,10 +3,10 @@ import {
   buildMetroQrPayload,
 } from './payload.js'
 import { BppID } from './policies.js'
-import {
-  type RenderMetroQrPayloadPngReturnType,
-  type RenderQrOptions,
-  renderMetroQrPayloadPng,
+import type {
+  RenderMetroQrPayloadPngParameters,
+  RenderMetroQrPayloadPngReturnType,
+  RenderQrOptions,
 } from './render.js'
 
 export interface BuildMetroQrProviderParameters {
@@ -49,6 +49,12 @@ export interface MetroQRApi {
   ) => MetroQRRenderPngReturnType
 }
 
+export interface CreateMetroQrApiParameters {
+  readonly renderMetroQrPayloadPng: (
+    parameters: RenderMetroQrPayloadPngParameters,
+  ) => MetroQRRenderPngReturnType
+}
+
 /**
  * High-level provider-specific QR payload builder.
  *
@@ -63,41 +69,45 @@ export interface MetroQRApi {
  *   qrOptions: { width: 512 },
  * })
  */
-export const MetroQR = {
-  bmrcl(parameters) {
-    return buildMetroQrPayload({
-      ...parameters,
-      bppId: BppID.BMRCL,
-    })
-  },
-  dmrc(parameters) {
-    return buildMetroQrPayload({
-      ...parameters,
-      bppId: BppID.DMRC,
-    })
-  },
-  mmmocl(parameters) {
-    return buildMetroQrPayload({
-      ...parameters,
-      bppId: BppID.MMMOCL,
-    })
-  },
-  mmopl(parameters) {
-    return buildMetroQrPayload({
-      ...parameters,
-      bppId: BppID.MMOPL,
-    })
-  },
-  mmrcl(parameters) {
-    return buildMetroQrPayload({
-      ...parameters,
-      bppId: BppID.MMRCL,
-    })
-  },
-  renderPng({ payload, qrOptions }) {
-    return renderMetroQrPayloadPng({
-      payload,
-      ...(qrOptions ?? {}),
-    })
-  },
-} satisfies MetroQRApi
+export function createMetroQrApi({
+  renderMetroQrPayloadPng,
+}: CreateMetroQrApiParameters): MetroQRApi {
+  return {
+    bmrcl(parameters) {
+      return buildMetroQrPayload({
+        ...parameters,
+        bppId: BppID.BMRCL,
+      })
+    },
+    dmrc(parameters) {
+      return buildMetroQrPayload({
+        ...parameters,
+        bppId: BppID.DMRC,
+      })
+    },
+    mmmocl(parameters) {
+      return buildMetroQrPayload({
+        ...parameters,
+        bppId: BppID.MMMOCL,
+      })
+    },
+    mmopl(parameters) {
+      return buildMetroQrPayload({
+        ...parameters,
+        bppId: BppID.MMOPL,
+      })
+    },
+    mmrcl(parameters) {
+      return buildMetroQrPayload({
+        ...parameters,
+        bppId: BppID.MMRCL,
+      })
+    },
+    renderPng({ payload, qrOptions }) {
+      return renderMetroQrPayloadPng({
+        payload,
+        ...(qrOptions ?? {}),
+      })
+    },
+  }
+}

@@ -27,6 +27,10 @@ export {
   type QrErrorCorrectionLevel,
 } from './payload.js'
 export * from './policies.js'
+export {
+  renderMetroQrPayloadPng,
+  renderMetroQrPng,
+} from './render.browser.js'
 export type {
   RenderMetroQrPayloadPngParameters,
   RenderMetroQrPayloadPngReturnType,
@@ -34,12 +38,8 @@ export type {
   RenderMetroQrPngReturnType,
   RenderQrOptions,
 } from './render.js'
-export {
-  renderMetroQrPayloadPng,
-  renderMetroQrPng,
-} from './render.server.js'
 
-import { renderMetroQrPayloadPng } from './render.server.js'
+import { renderMetroQrPayloadPng } from './render.browser.js'
 
 /** High-level provider-specific QR payload and PNG API. */
 export const MetroQR = createMetroQrApi({ renderMetroQrPayloadPng })
